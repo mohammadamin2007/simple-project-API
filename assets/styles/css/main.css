@@ -24,6 +24,29 @@
   background-color: #0e0e0e;
   color: white;
 }
+#navbar .navbar .container .profile-container {
+  min-width: 10rem;
+}
+@media screen and (min-width: 650px) {
+  #navbar .navbar .container .profile-container {
+    padding-left: 20px;
+  }
+}
+@media screen and (max-width: 650px) {
+  #navbar .navbar .container .profile-container {
+    padding-top: 20px;
+  }
+}
+#navbar .navbar .container .profile-container .profile {
+  transition: background-color 0.15s ease-in-out, color 0.15s ease-in-out;
+  background-color: white;
+  font-size: 17px;
+  color: #0e0e0e;
+}
+#navbar .navbar .container .profile-container .profile:hover {
+  background-color: #0e0e0e;
+  color: white;
+}
 
 #site-content #header {
   background-image: url("./../../images/pexels-eberhard-grossgasteiger-691668.jpg");

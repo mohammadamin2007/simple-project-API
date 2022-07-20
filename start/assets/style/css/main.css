@@ -26,26 +26,26 @@
 #navbar .navbar .container .collapse .navbar-nav .nav-item .nav-link:hover {
   color: rgb(255, 106, 0);
 }
-#navbar .navbar .container .log-in-sign-up {
+#navbar .navbar .container .profile-container {
   min-width: 10rem;
 }
 @media screen and (min-width: 650px) {
-  #navbar .navbar .container .log-in-sign-up {
+  #navbar .navbar .container .profile-container {
     padding-left: 20px;
   }
 }
 @media screen and (max-width: 650px) {
-  #navbar .navbar .container .log-in-sign-up {
+  #navbar .navbar .container .profile-container {
     padding-top: 20px;
   }
 }
-#navbar .navbar .container .log-in-sign-up .profile {
+#navbar .navbar .container .profile-container .profile {
   transition: background-color 0.15s ease-in-out, color 0.15s ease-in-out;
   background-color: white;
   font-size: 17px;
   color: #0e0e0e;
 }
-#navbar .navbar .container .log-in-sign-up .profile:hover {
+#navbar .navbar .container .profile-container .profile:hover {
   background-color: #0e0e0e;
   color: white;
 }
@@ -122,6 +122,25 @@
   100% {
     opacity: 1;
   }
+}
+
+#alert {
+  transition: all 1s ease-in-out;
+  z-index: 900;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+#alert .container {
+  transition: transform 1s ease-in-out;
+  background: linear-gradient(45deg, blue 20%, rgb(104, 51, 250) 80%);
+  height: 20rem;
+  border-radius: 50px;
+}
+#alert .container .OK-btn {
+  width: 15rem;
+}
+#alert .container .title {
+  padding-top: 1rem;
+  padding-bottom: 1rem;
 }
 
 /*# sourceMappingURL=main.css.map */

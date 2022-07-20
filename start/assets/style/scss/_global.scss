@@ -28,7 +28,7 @@
                     }
                 }
             }
-            .log-in-sign-up{
+            .profile-container{
                 @media screen  and (min-width: 650px){
                     padding-left: 20px;
                 }
@@ -119,9 +119,29 @@
     transition: opacity 1s ease-in-out;
 }
 // notices styles
-// animated logo
+// animated logo styles
 .animated-logo{
     animation: animated-logo 5s ease-in-out infinite;
     @include animated-logo;
 }
-// animated logo
+// animated logo styles
+// alert styles
+#alert{
+    transition: all 1s ease-in-out;
+    z-index: 900;
+    background-color: $alert-container-background;
+    .container{
+        transition: transform 1s ease-in-out;
+        background: $alert-background;
+        height: 20rem;
+        border-radius: 50px;
+        .OK-btn{
+            width: 15rem;
+        }
+        .title{
+            padding-top: 1rem;
+            padding-bottom: 1rem;
+        }
+    }
+}
+// alert styles

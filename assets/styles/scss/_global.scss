@@ -24,6 +24,25 @@
                     color: $color-log-sign-when-hover;
                 }
             }
+            .profile-container{
+                @media screen  and (min-width: 650px){
+                    padding-left: 20px;
+                }
+                @media screen  and (max-width: 650px){
+                    padding-top: 20px;
+                }
+                min-width: 10rem;
+                .profile{
+                    transition: background-color .15s ease-in-out, color .15s ease-in-out;
+                    background-color: $background-log-sign;
+                    font-size: 17px;
+                    color: $default-log-sign-color;
+                }
+                .profile:hover {
+                    background-color: $background-log-sign-when-hover;
+                    color: $color-log-sign-when-hover;
+                }
+            }
         }
     }
 }
