@@ -1,0 +1,99 @@
+// navbar styles
+#navbar{
+    .navbar{
+        .container{
+            .navbar-brand{
+                width: 12rem;
+            }
+            .log-in-sign-up{
+                @media screen  and (min-width: 650px){
+                    padding-left: 20px;
+                }
+                @media screen  and (max-width: 650px){
+                    padding-top: 20px;
+                }
+                min-width: 10rem;
+                .log-in, .sign-up{
+                    transition: background-color .15s ease-in-out, color .15s ease-in-out;
+                    background-color: $background-log-sign;
+                    font-size: 17px;
+                    color: $default-log-sign-color;
+                }
+                .log-in:hover, .sign-up:hover {
+                    background-color: $background-log-sign-when-hover;
+                    color: $color-log-sign-when-hover;
+                }
+            }
+        }
+    }
+}
+// navbar styles
+// site content styles
+#site-content{
+    // header styles
+    #header{
+        background-image: url("./../../images/pexels-eberhard-grossgasteiger-691668.jpg");
+        background-position: 50% 50%;
+        background-size: cover;
+        @media screen and (min-width: 650px){
+            padding-top: 160px;
+            padding-bottom: 160px;
+        }
+        padding-top: 250px;
+        padding-bottom: 250px;
+        .container{
+            .row:nth-child(1) {
+                .header-title{
+                    @media screen and (min-width: 214px) {
+                        margin-bottom: 10rem !important;
+                    }
+                   h1{
+                    transition: opacity 1.5s ease-in-out, transform 1.5s ease-in-out;
+                    color: $color-text-header !important;
+                   }
+                }
+            }
+            .row:nth-child(2){
+                .header-btn{
+                    transition: opacity 1.5s ease-in-out, transform 1.5s ease-in-out;
+                    padding: 0;
+                    width: 100%;
+                    position: relative;
+                    a:hover{
+                        .underline-border{
+                            width: 100%;
+                        }
+                    }
+                    a{
+                        .underline-border{
+                            height: 2px;
+                            width: 0;
+                            transition: width 1s ease-in-out;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    // header styles
+}
+// site content styles
+// loader styles
+.loader{
+    background-color: $loader-background-color;
+    z-index: 1000;
+    overflow-x: hidden;
+    transition: opacity 1s ease-in-out;
+    .loader-icon{
+        height: 5rem;
+        width: 5rem;
+        border-top: 5px solid red;
+        border-bottom: 5px solid blue;
+        border-right: 5px solid green;
+        border-left: 5px solid yellow;
+        border-radius: 50px;
+        animation: loader-animation 2s ease-in-out infinite;
+        @include loader-animation-mixin
+    }
+}
+// loader styles
