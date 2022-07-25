@@ -91,6 +91,7 @@ window.onload = () => {
                     document.querySelector(".learn-how-work").classList.add("d-none");
                     clearInterval(learnInterval);
                 };
+                
             }, 1000);
             localStorage.setItem("graduated", true);
         } else {
