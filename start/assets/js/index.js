@@ -2,15 +2,11 @@
 let nameInput = document.querySelector("#name");
 let getForm = document.getElementsByTagName("form");
 let getTable = document.querySelector(".table tbody");
-let idInput = document.querySelector("#id");
-let phoneInput = document.querySelector("#phone");
-let emailInput = document.querySelector("#email");
 let typedName = "";
 let typedId = 0;
 let typedPhone = 0;
 let typedEmail = "";
 let areEqual = false;
-let inputList = {};
 let conentBox = document.querySelector(".content-box");
 let isComplete = `<i></i>`;
 let noReminder = ``;
@@ -105,7 +101,7 @@ window.onload = () => {
 };
 // graduate
 // call API
-async function readFile(url) {
+async function readApi(url) {
     let getFile = await fetch(url);
     let data = await getFile.json();
     return data;
@@ -120,196 +116,168 @@ if(localStorage.getItem("name") != null) {
 };
 // fill inputs automatically
 // make the table
-emailInput.addEventListener("keyup", (e) => {
-    if(e.key == "Enter") {
-        // get the value of inputs
-        inputList["name"] = nameInput.value;
-        inputList["id"] = idInput.value;
-        inputList["phone"] = phoneInput.value;
-        inputList["email"] = emailInput.value;
-        let searchItems = ["name", "phone","email"];
-        // get the value of inputs
-        // fill localstorage
-        localStorage.setItem("name", inputList["name"]);
-        localStorage.setItem("id", inputList["id"]);
-        localStorage.setItem("phone", inputList["phone"]);
-        localStorage.setItem("email", inputList["email"]);
-        // fill localstorage
-        // read users and check whether that user exist or not
-        readFile("https://jsonplaceholder.typicode.com/users")
-            .then(data => {
-                data.forEach((user) => {
-                    if(user.id == inputList["id"]) {
-                        for(let i = 0; i < searchItems.length; i++) {
-                            areEqual = (inputList[searchItems[i]] == eval("user." + searchItems[i]));
-                            if(!areEqual) {
-                                break;
-                            };
+// read users and check whether that user exist or not
+readApi("https://jsonplaceholder.typicode.com/users")
+    .then(data => {
+        if(areEqual) {
+            // show profile link
+            profileContainer.classList.remove("d-none");
+            profileLink.href = `www.todo.com/profiles/${inputList["name"]}%20${inputList["id"]}%20${inputList["phone"]}%20${inputList["email"]}`;
+            // show profile link
+            // show loading icon
+            document.querySelector(".table-loader").classList.remove("opacity-0");
+            // show loading icon    
+            if(conentBox.childElementCount !== 0) {
+                conentBox.removeChild(conentBox.firstElementChild);
+            };
+            conentBox.classList.add("d-none");
+            getForm[0].classList.remove("d-none");
+            // read todos and add them if they are that user's todos
+            readFile("https://jsonplaceholder.typicode.com/todos").then(toDos => {
+                let countId = 1;
+                toDos.forEach((toDosItem) => {
+                    if(toDosItem.userId == inputList["id"]) {
+                        if(toDosItem.completed) {
+                            isComplete = `<i class="fa fa-check table-icon" aria-hidden="true"></i>`;
+                            noReminder = [``, ``];
+                        } else {
+                            isComplete = `<i class="fa fa-times table-icon" aria-hidden="true"></i>`;
+                            noReminder = [`<input type="checkbox" class="form-check-input table-reminders">`, `<input type="text" class="form-control table-input table-reminders">`];
                         };
+                        getTable.innerHTML += `
+                            <tr id="row-${toDosItem.id}">
+                                <td>${countId}</td>
+                                <td>${toDosItem.title}</td>
+                                <td>${noReminder[0]}</td>
+                                <td>${noReminder[1]}</td>
+                                <td>${isComplete}</td>
+                            </tr>
+                        `;
+                        countId += 1;
                     };
                 });
-                if(areEqual) {
-                    // show profile link
-                    profileContainer.classList.remove("d-none");
-                    profileLink.href = `www.todo.com/profiles/${inputList["name"]}%20${inputList["id"]}%20${inputList["phone"]}%20${inputList["email"]}`;
-                    // show profile link
-                    // show loading icon
-                    document.querySelector(".table-loader").classList.remove("opacity-0");
-                    // show loading icon    
-                    if(conentBox.childElementCount !== 0) {
-                        conentBox.removeChild(conentBox.firstElementChild);
-                    };
-                    conentBox.classList.add("d-none");
-                    getForm[0].classList.remove("d-none");
-                    getForm[1].classList.add("d-none");
-                    // read todos and add them if they are that user's todos
-                    readFile("https://jsonplaceholder.typicode.com/todos").then(toDos => {
-                        let countId = 1;
-                        toDos.forEach((toDosItem) => {
-                            if(toDosItem.userId == inputList["id"]) {
-                                if(toDosItem.completed) {
-                                    isComplete = `<i class="fa fa-check table-icon" aria-hidden="true"></i>`;
-                                    noReminder = [``, ``];
-                                } else {
-                                    isComplete = `<i class="fa fa-times table-icon" aria-hidden="true"></i>`;
-                                    noReminder = [`<input type="checkbox" class="form-check-input table-reminders">`, `<input type="text" class="form-control table-input table-reminders">`];
-                                };
-                                getTable.innerHTML += `
-                                    <tr id="row-${toDosItem.id}">
-                                        <td>${countId}</td>
-                                        <td>${toDosItem.title}</td>
-                                        <td>${noReminder[0]}</td>
-                                        <td>${noReminder[1]}</td>
-                                        <td>${isComplete}</td>
-                                    </tr>
-                                `;
-                                countId += 1;
-                            };
-                        });
-                        return countId;
-                    }).then((countId) => { 
-                        for(let i = 1; i < countId;i ++) {
-                            document.querySelector(`#row-${i} td:last-child`).addEventListener("click", () => {
-                               if( document.querySelector(`#row-${i} td:last-child i`).classList.contains("fa-times")) {
-                                    document.querySelector(`#row-${i} td:last-child i`).classList.remove("fa-times");
-                                    document.querySelector(`#row-${i} td:last-child i`).classList.add("fa-check");
-                                    document.querySelector(`#row-${i} td:nth-child(3) input`).classList.add("d-none");
-                                    document.querySelector(`#row-${i} td:nth-child(4) input`).classList.add("d-none");
-                                };
-                            });
+                return countId;
+            }).then((countId) => { 
+                for(let i = 1; i < countId;i ++) {
+                    document.querySelector(`#row-${i} td:last-child`).addEventListener("click", () => {
+                        if( document.querySelector(`#row-${i} td:last-child i`).classList.contains("fa-times")) {
+                            document.querySelector(`#row-${i} td:last-child i`).classList.remove("fa-times");
+                            document.querySelector(`#row-${i} td:last-child i`).classList.add("fa-check");
+                            document.querySelector(`#row-${i} td:nth-child(3) input`).classList.add("d-none");
+                            document.querySelector(`#row-${i} td:nth-child(4) input`).classList.add("d-none");
                         };
-                        setTimeout(() => {
-                            document.querySelector(".table-loader").classList.add("opacity-0");
-                        }, 3000);
-                        setTimeout(() => {
-                            document.querySelector("tbody").classList.remove("d-none");
-                            document.querySelector(".table-loader").classList.add("d-none");
-                        }, 4000);
-                        for(let i = 0; i < countId; i++) {
-                            if(document.querySelector(`#row-${i} td:nth-child(3) input`) !== null) {
-                                document.querySelector(`#row-${i} td:nth-child(3) input`).addEventListener("change",() => {
-                                    if(document.querySelector(`#row-${i} td:nth-child(3) input`).checked) {
-                                        secoundCounter = 0;
-                                        let alertInterval = setInterval(() => {
-                                            secoundCounter += 1;
-                                            if(secoundCounter == parseInt(document.querySelector(`#row-${i} td:nth-child(4) input`).value)) {
-                                                customAlert.classList.remove("d-none");
-                                                setTimeout(()=> {
-                                                    document.querySelector("#alert .container").style.transform = "translateY(0px)";
-                                                    customAlert.classList.remove("opacity-0");
-                                                    let newAudio = new Audio("./assets/audio/MyRingtone.IR_1559234155_1690.mp3");
-                                                    newAudio.play();
-                                                    newAudio.loop =true;
-                                                    alertTitle.textContent = document.querySelector(`#row-${i} td:nth-child(2)`).textContent;
-                                                    okBtn.addEventListener("click", function clickedOkBtn() {
-                                                        customAlert.classList.add("opacity-0");
-                                                        document.querySelector("#alert .container").style.transform = "translateY(60px)";
-                                                        setTimeout(() => {
-                                                            customAlert.classList.add("d-none");
-                                                            newAudio.pause();
-                                                            removeEventListener("click", this);
-                                                        }, 1000);
-                                                    });
-                                                }, 500);
-                                                clearInterval(alertInterval);
-                                            };
-                                        }, 1000);
-                                        secoundCounter = 0;
-                                    }
-                                });
-                            }
-                        };
-                        newActivity.addEventListener("keyup", (ev) => {
-                            if(ev.key == "Enter") {
-                                if(newActivity.value != "") {
-                                    getTable.innerHTML += `
-                                    <tr id="row-${countId}">
-                                        <td>${countId}</td>
-                                        <td>${newActivity.value}</td>
-                                        <td><input type="checkbox" class="form-check-input table-reminders"></td>
-                                        <td><input type="text" class="form-control table-input table-reminders"></td>
-                                        <td><i class="fa fa-times table-icon" aria-hidden="true"></i></td>
-                                    </tr>
-                                    `
-                                    window.scrollTo(0, document.querySelector(`#row-${countId}`).getBoundingClientRect().top);
-                                    countId += 1;
-                                    for(let i = 1; i < countId;i ++) {
-                                        document.querySelector(`#row-${i} td:last-child`).addEventListener("click", () => {
-                                           if( document.querySelector(`#row-${i} td:last-child i`).classList.contains("fa-times")) {
-                                                document.querySelector(`#row-${i} td:last-child i`).classList.remove("fa-times");
-                                                document.querySelector(`#row-${i} td:last-child i`).classList.add("fa-check");
-                                                document.querySelector(`#row-${i} td:nth-child(3) input`).classList.add("d-none");
-                                                document.querySelector(`#row-${i} td:nth-child(4) input`).classList.add("d-none");
-                                            };
-                                        });
-                                    };
-                                    for(let i = 0; i < countId; i++) {
-                                        if(document.querySelector(`#row-${i} td:nth-child(3) input`) !== null) {
-                                            document.querySelector(`#row-${i} td:nth-child(3) input`).addEventListener("change",() => {
-                                                if(document.querySelector(`#row-${i} td:nth-child(3) input`).checked) {
-                                                    secoundCounter = 0;
-                                                    let alertInterval = setInterval(() => {
-                                                        secoundCounter += 1;
-                                                        if(secoundCounter == parseInt(document.querySelector(`#row-${i} td:nth-child(4) input`).value)) {
-                                                            customAlert.classList.remove("d-none");
-                                                            setTimeout(()=> {
-                                                                document.querySelector("#alert .container").style.transform = "translateY(0px)";
-                                                                customAlert.classList.remove("opacity-0");
-                                                                let newAudio = new Audio("./assets/audio/MyRingtone.IR_1559234155_1690.mp3");
-                                                                newAudio.play();
-                                                                newAudio.loop =true;
-                                                                alertTitle.textContent = document.querySelector(`#row-${i} td:nth-child(2)`).textContent;
-                                                                okBtn.addEventListener("click", function clickedOkBtn() {
-                                                                    customAlert.classList.add("opacity-0");
-                                                                    document.querySelector("#alert .container").style.transform = "translateY(60px)";
-                                                                    setTimeout(() => {
-                                                                        customAlert.classList.add("d-none");
-                                                                        newAudio.pause();
-                                                                        removeEventListener("click", this);
-                                                                    }, 1000);
-                                                                });
-                                                            }, 500);
-                                                            clearInterval(alertInterval);
-                                                        };
-                                                    }, 1000);
-                                                    secoundCounter = 0;
-                                                }
-                                            });
-                                        }
-                                    };
-                                    newActivity.value = "";
-                                } else {
-                                    newActivityError.classList.remove("d-none");
-                                };  
-                            };
-                        });
                     });
-                    // read todos and add them if they are that user's todos
-                } else {
-                    conentBox.innerHTML = `<p class="display-4 text-danger">USER NOT FOUND</p>`;
                 };
+                setTimeout(() => {
+                    document.querySelector(".table-loader").classList.add("opacity-0");
+                }, 3000);
+                setTimeout(() => {
+                    document.querySelector("tbody").classList.remove("d-none");
+                    document.querySelector(".table-loader").classList.add("d-none");
+                }, 4000);
+                for(let i = 0; i < countId; i++) {
+                    if(document.querySelector(`#row-${i} td:nth-child(3) input`) !== null) {
+                        document.querySelector(`#row-${i} td:nth-child(3) input`).addEventListener("change",() => {
+                            if(document.querySelector(`#row-${i} td:nth-child(3) input`).checked) {
+                                secoundCounter = 0;
+                                let alertInterval = setInterval(() => {
+                                    secoundCounter += 1;
+                                    if(secoundCounter == parseInt(document.querySelector(`#row-${i} td:nth-child(4) input`).value)) {
+                                        customAlert.classList.remove("d-none");
+                                        setTimeout(()=> {
+                                            document.querySelector("#alert .container").style.transform = "translateY(0px)";
+                                            customAlert.classList.remove("opacity-0");
+                                            let newAudio = new Audio("./assets/audio/MyRingtone.IR_1559234155_1690.mp3");
+                                            newAudio.play();
+                                            newAudio.loop =true;
+                                            alertTitle.textContent = document.querySelector(`#row-${i} td:nth-child(2)`).textContent;
+                                            okBtn.addEventListener("click", function clickedOkBtn() {
+                                                customAlert.classList.add("opacity-0");
+                                                document.querySelector("#alert .container").style.transform = "translateY(60px)";
+                                                setTimeout(() => {
+                                                    customAlert.classList.add("d-none");
+                                                    newAudio.pause();
+                                                    removeEventListener("click", this);
+                                                }, 1000);
+                                            });
+                                        }, 500);
+                                        clearInterval(alertInterval);
+                                    };
+                                }, 1000);
+                                secoundCounter = 0;
+                            }
+                        });
+                    }
+                };
+                newActivity.addEventListener("keyup", (ev) => {
+                    if(ev.key == "Enter") {
+                        if(newActivity.value != "") {
+                            getTable.innerHTML += `
+                            <tr id="row-${countId}">
+                                <td>${countId}</td>
+                                <td>${newActivity.value}</td>
+                                <td><input type="checkbox" class="form-check-input table-reminders"></td>
+                                <td><input type="text" class="form-control table-input table-reminders"></td>
+                                <td><i class="fa fa-times table-icon" aria-hidden="true"></i></td>
+                            </tr>
+                            `
+                            window.scrollTo(0, document.querySelector(`#row-${countId}`).getBoundingClientRect().top);
+                            countId += 1;
+                            for(let i = 1; i < countId;i ++) {
+                                document.querySelector(`#row-${i} td:last-child`).addEventListener("click", () => {
+                                    if( document.querySelector(`#row-${i} td:last-child i`).classList.contains("fa-times")) {
+                                        document.querySelector(`#row-${i} td:last-child i`).classList.remove("fa-times");
+                                        document.querySelector(`#row-${i} td:last-child i`).classList.add("fa-check");
+                                        document.querySelector(`#row-${i} td:nth-child(3) input`).classList.add("d-none");
+                                        document.querySelector(`#row-${i} td:nth-child(4) input`).classList.add("d-none");
+                                    };
+                                });
+                            };
+                            for(let i = 0; i < countId; i++) {
+                                if(document.querySelector(`#row-${i} td:nth-child(3) input`) !== null) {
+                                    document.querySelector(`#row-${i} td:nth-child(3) input`).addEventListener("change",() => {
+                                        if(document.querySelector(`#row-${i} td:nth-child(3) input`).checked) {
+                                            secoundCounter = 0;
+                                            let alertInterval = setInterval(() => {
+                                                secoundCounter += 1;
+                                                if(secoundCounter == parseInt(document.querySelector(`#row-${i} td:nth-child(4) input`).value)) {
+                                                    customAlert.classList.remove("d-none");
+                                                    setTimeout(()=> {
+                                                        document.querySelector("#alert .container").style.transform = "translateY(0px)";
+                                                        customAlert.classList.remove("opacity-0");
+                                                        let newAudio = new Audio("./assets/audio/MyRingtone.IR_1559234155_1690.mp3");
+                                                        newAudio.play();
+                                                        newAudio.loop =true;
+                                                        alertTitle.textContent = document.querySelector(`#row-${i} td:nth-child(2)`).textContent;
+                                                        okBtn.addEventListener("click", function clickedOkBtn() {
+                                                            customAlert.classList.add("opacity-0");
+                                                            document.querySelector("#alert .container").style.transform = "translateY(60px)";
+                                                            setTimeout(() => {
+                                                                customAlert.classList.add("d-none");
+                                                                newAudio.pause();
+                                                                removeEventListener("click", this);
+                                                            }, 1000);
+                                                        });
+                                                    }, 500);
+                                                    clearInterval(alertInterval);
+                                                };
+                                            }, 1000);
+                                            secoundCounter = 0;
+                                        }
+                                    });
+                                }
+                            };
+                            newActivity.value = "";
+                        } else {
+                            newActivityError.classList.remove("d-none");
+                        };  
+                    };
+                });
             });
-    };
-    // read users and check whether that user exist or not
-});
+            // read todos and add them if they are that user's todos
+        } else {
+            conentBox.innerHTML = `<p class="display-4 text-danger">USER NOT FOUND</p>`;
+        };
+    });
+// read users and check whether that user exist or not
 // make the table

@@ -1,3 +1,8 @@
+.disable-link {
+  color: #767676 !important;
+  pointer-events: none;
+}
+
 #navbar .navbar .container .navbar-brand {
   width: 12rem;
 }
@@ -75,6 +80,9 @@
   padding: 0;
   width: 100%;
   position: relative;
+}
+#site-content #header .container .row:nth-child(2) .header-btn .f-login-signup a:hover {
+  text-decoration: underline !important;
 }
 #site-content #header .container .row:nth-child(2) .header-btn a:hover .underline-border {
   width: 100%;

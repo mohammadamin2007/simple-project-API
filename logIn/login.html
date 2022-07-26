@@ -1,10 +1,72 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="h-100">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>TODO | Log In</title>
+    <link rel="icon" href="../assets/images/icon.png">
+    <link rel="stylesheet" href="./style/css/main.css">
+    <link rel="stylesheet" href="../bootstrap/css/bootstrap.css">
 </head>
-<body>
-
+<body class="h-100">
+    <!-- loader -->
+    <div class="loader d-flex w-100 h-100 bg-dark justify-content-center position-absolute top-0">
+        <div class="loader-icon align-self-center"></div>
+    </div>
+    <!-- loader -->
+    <!-- navbar start -->
+    <section id="navbar" class="d-none position-absolute top-0 w-100">
+        <div class="navbar navbar-dark">
+            <div class="container">
+                <div class="navbar-brand">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/a/a3/To_Do.svg" class="w-50" alt="navbar-brand">
+                </div>
+                <div class="collapse show">
+                    <ul class="navbar-nav nav">
+                        <li class="nav-item"><a href="../index.html" class="nav-link"><span class="align-self-center">Main Home</span></a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- navbar end -->
+    <!-- sign up form start -->
+    <section id="form-section" class="d-flex w-100 h-100">
+        <div class="container align-self-center">
+            <form class="d-flex flex-column">
+                <div class="form-floating-container col-12 col-md-6 ps-0 align-self-center">
+                    <div class="form-floating">
+                        <input type="text" class="form-control" id="username" name="username" autocomplete="name">
+                        <label for="username">User Name</label>
+                    </div>
+                </div>
+                <div class="form-floating-container col-12 col-md-6 ps-0 align-self-center">
+                    <div class="form-floating">
+                        <input type="text" class="form-control" id="phone-number" name="phonenumber" autocomplete="cc-number">
+                        <label for="phone-number">Phone Number</label>
+                    </div>
+                </div>
+                <div class="form-floating-container col-12 col-md-6 ps-0 align-self-center">
+                    <div class="form-floating">
+                        <input type="email" class="form-control" id="email" name="email" autocomplete="email">
+                        <label for="email">Email</label>
+                    </div>
+                </div>
+                <div class="form-floating-container col-12 col-md-6 ps-0 align-self-center">
+                    <div class="form-floating">
+                        <input type="email" class="form-control" id="id" name="id">
+                        <label for="email">Your Id</label>
+                    </div>
+                </div>
+                <div class="have-account d-flex justify-content-center pt-3">
+                    <a href="../signUp/signup.html" class="h5 text-black">Don't have an account?</a>
+                </div>
+                <div class="form-floating-container col-12 col-md-6 ps-0 d-flex justify-content-center align-self-center">
+                    <button class="btn btn-outline-dark">Log In</button>
+                </div>
+            </form>
+        </div>
+    </section>
+    <!-- sign up form end -->
+    <script src="./js/login.js"></script>
 </body>
 </html>

@@ -101,4 +101,15 @@ body {
   }
 }
 
+body {
+  background-image: url("../../../assets/images/2314950.webp");
+}
+
+#form-section .container form .form-floating input {
+  border: 1px solid white !important;
+}
+#form-section .container form .form-floating label {
+  color: white !important;
+}
+
 /*# sourceMappingURL=main.css.map */

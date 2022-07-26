@@ -23,3 +23,14 @@ if(localStorage.getItem("name") !== null) {
     document.querySelector(".profile-container a").href = `www.todo.com/profiles/${localStorage.getItem("name")}%20${localStorage.getItem("id")}%20${localStorage.getItem("phone")}%20${localStorage.getItem("email")}`;
 };
 // loged in or not
+// disable start link
+if(localStorage.user != null) {
+    document.querySelector(".header-btn a").classList.remove("disable-link");
+};
+// disable start link
+// logout
+document.querySelector(".log-out-btn").addEventListener("click", () => {
+    localStorage.removeItem("user");
+    window.location = "http://127.0.0.1:5500/"
+});
+// logout

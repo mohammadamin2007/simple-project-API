@@ -1,3 +1,9 @@
+// disable link
+.disable-link{
+    color: #767676 !important;
+    pointer-events: none;
+}
+// disable link
 // navbar styles
 #navbar{
     .navbar{
@@ -78,6 +84,11 @@
                     padding: 0;
                     width: 100%;
                     position: relative;
+                    .f-login-signup{
+                        a:hover{
+                            text-decoration: underline !important;
+                        }
+                    }
                     a:hover{
                         .underline-border{
                             width: 100%;
