@@ -1,0 +1,16 @@
+@mixin d-flex {
+  display: -moz-flex;
+  display: -webkit-flex;
+  display: -ms-flex;
+};
+
+@mixin loader-animation-mixin {
+  @keyframes loader-animation {
+    0%{
+      transform: rotate(0deg);
+    }
+    100%{
+      transform: rotate(360deg);
+    }
+  }
+}

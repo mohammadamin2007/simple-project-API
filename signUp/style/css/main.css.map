@@ -1,0 +1,1 @@
+{"version":3,"sourceRoot":"","sources":["../scss/_global.scss","../scss/_mixins.scss","../scss/_variables.scss"],"names":[],"mappings":"AAIM;EACE;;AAEF;EACE;;AAEE;ECTR;EACA;EACA;EDSU;;AACA;EACE;ECbZ;EACA;EACA;EDaY,OEhBO;;AFiBP;EACE;EACA;;AAGJ;EACE,OEtBkB;;;AFiChC;EACE;EACA;EACA;EACA;EACA;EACA;EACA;EACA;;AACA;EACE;IACE;;EAEF;IACE","file":"main.css"}

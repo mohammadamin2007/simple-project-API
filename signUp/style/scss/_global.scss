@@ -1,0 +1,53 @@
+// navbar styles
+#navbar{
+  .navbar{
+    .container{
+      .navbar-brand{
+        width: 12rem;
+      }
+      .collapse{
+        display: flex;
+        .navbar-nav{
+          .nav-item{
+            @include d-flex;
+            height: 90px;
+            .nav-link{
+              height: 100%;
+              @include d-flex;
+              color: $navbar-links-color;
+              span{
+                transition: color .15s ease-in-out;
+                font-weight: 400;
+              }
+            }
+            .nav-link:hover{
+              color: $navbar-links-color-when-hover;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+// navbar styles
+
+// loader icon
+.loader-icon{
+  height: 5rem;
+  width: 5rem;
+  border-top: 5px solid red;
+  border-bottom: 5px solid blue;
+  border-right: 5px solid green;
+  border-left: 5px solid yellow;
+  border-radius: 50px;
+  animation: loader-animation 2s ease-in-out infinite;
+  @keyframes loader-animation {
+    0%{
+      transform: rotate(0deg);
+    }
+    100%{
+      transform: rotate(360deg);
+    }
+  }
+}
+// loader icon
