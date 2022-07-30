@@ -530,19 +530,19 @@ progress {
 }
 
 .display-4 {
-  font-size: 7rem;
+  font-size: 5rem;
   font-weight: 500;
   line-height: 1.2;
 }
 @media (min-width: 1200px) {
   .display-4 {
-    font-size: 7rem;
+    font-size: 5rem;
   }
 }
 @media (max-width: 827.98px){
   .display-4 {
     margin-bottom: 0.5em;
-    font-size: 5em;
+    font-size: 5sem;
   }
 }
 @media (max-width: 621px) {

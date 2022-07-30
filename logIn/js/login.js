@@ -53,13 +53,15 @@ goBtn.addEventListener("click", (e) => {
                     currentUser  = user
                     if(!areEqual) {
                         break;
-                    };
-                };
-            };
+                    }
+                }
+            }
         });
         if(areEqual) {
-            localStorage.setItem("user", currentUser);
-            window.location = "http://127.0.0.1:5500/"
+            console.log(currentUser)
+            localStorage.setItem("user", JSON.stringify(currentUser));
+            localStorage.setItem("loggedIn", "true")
+            window.location = "file:///D:/mohamamdamin/simple-project-API/index.html";
         } else {
             alert("user doesnt exist");
         }

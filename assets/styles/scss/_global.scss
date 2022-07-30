@@ -1,5 +1,6 @@
 // disable link
 .disable-link{
+    filter: blur(3px);
     color: #767676 !important;
     pointer-events: none;
 }
@@ -60,18 +61,15 @@
         background-image: url("./../../images/pexels-eberhard-grossgasteiger-691668.jpg");
         background-position: 50% 50%;
         background-size: cover;
-        @media screen and (min-width: 650px){
-            padding-top: 160px;
-            padding-bottom: 160px;
-        }
-        padding-top: 250px;
-        padding-bottom: 250px;
+        padding-top: 160px;
+        padding-bottom: 160px;
         .container{
             .row:nth-child(1) {
                 .header-title{
-                    @media screen and (min-width: 214px) {
+                    @media screen and (min-width: 500px) {
                         margin-bottom: 10rem !important;
                     }
+                    margin-bottom: 5rem !important;
                    h1{
                     transition: opacity 1.5s ease-in-out, transform 1.5s ease-in-out;
                     color: $color-text-header !important;

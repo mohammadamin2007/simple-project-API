@@ -17,20 +17,25 @@ window.addEventListener("load", () => {
 });
 // site loader
 // loged in or not
-if(localStorage.getItem("name") !== null) {
-    document.querySelectorAll(".log-in-sign-up")[0].classList.add("d-none");
+if(localStorage.user != null && localStorage.loggedIn === "true" && typeof JSON.parse(localStorage.user) == "object") {
+    let currentUser = JSON.parse(localStorage.user);
+    document.querySelector(".log-in-sign-up").classList.add("d-none");
     document.querySelector(".profile-container").classList.remove("d-none");
-    document.querySelector(".profile-container a").href = `www.todo.com/profiles/${localStorage.getItem("name")}%20${localStorage.getItem("id")}%20${localStorage.getItem("phone")}%20${localStorage.getItem("email")}`;
-};
+    document.querySelector(".profile").href = `https://todo.com/profiles/${currentUser.id}${currentUser.name}${currentUser.email}${currentUser.phone}/`;
+}
 // loged in or not
 // disable start link
-if(localStorage.user != null) {
-    document.querySelector(".header-btn a").classList.remove("disable-link");
-};
+if(localStorage.user != null && localStorage.loggedIn === "true" && typeof JSON.parse(localStorage.user) == "object") {
+    document.querySelector(".start-link").classList.remove("disable-link");
+    document.querySelector(".f-login-signup").classList.add("d-none");
+    document.querySelector(".profile-container").classList.remove("d-none");
+    document.querySelector(".log-in-sign-up").classList.add("d-none");
+}
 // disable start link
 // logout
 document.querySelector(".log-out-btn").addEventListener("click", () => {
     localStorage.removeItem("user");
-    window.location = "http://127.0.0.1:5500/"
+    localStorage.removeItem("loggedIn");
+    window.location = "file:///D:/mohamamdamin/simple-project-API/index.html"
 });
 // logout
