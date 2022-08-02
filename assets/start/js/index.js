@@ -31,16 +31,23 @@ alertSound.loop = true;
 //looping alertSound
 
 //mute alert
-okBtn.addEventListener("click", () => {
-   alertSound.pause();
-   alertContainer.style.transform = "translateY(60px)";
-   customAlert.classList.add("opacity-0");
-   alertSound = new Audio("../assets/start/audio/MyRingtone.IR_1559234155_1690.mp3");
-   setTimeout(() => {
-       customAlert.classList.add("d-none");
-       alertTitle.innerHTML = "";
-   }, 1000);
-});
+function muteAlert(i) {
+    alertSound.pause();
+    alertContainer.style.transform = "translateY(60px)";
+    customAlert.classList.add("opacity-0");
+    alertSound = new Audio("../assets/start/audio/MyRingtone.IR_1559234155_1690.mp3");
+    okBtn.onclick = () => {
+        return false;
+    };
+    setTimeout(() => {
+        customAlert.classList.add("d-none");
+        alertTitle.innerHTML = "";
+        document.querySelector(`#row-${i} td:last-child i`).classList.remove("fa-times");
+        document.querySelector(`#row-${i} td:last-child i`).classList.add("fa-check");
+        document.querySelector(`#row-${i} td:nth-child(3) input`).classList.add("d-none");
+        document.querySelector(`#row-${i} td:nth-child(4) input`).classList.add("d-none");
+    }, 1000);
+}
 //mute alert
 
 // call API
@@ -95,17 +102,17 @@ function mainCodes() {
                                             noReminder = [``, ``];
                                         } else {
                                             isComplete = `<i class="fa fa-times table-icon" aria-hidden="true"></i>`;
-                                            noReminder = [`<input type="checkbox" class="form-check-input table-reminders">`, `<input type="text" class="form-control table-input table-reminders">`];
+                                            noReminder = [`<input type="checkbox" class="form-check-input table-reminders">`, `<input type="number" class="form-control table-input table-reminders" min="1">`];
                                         }
                                         getTable.innerHTML += `
-                            <tr id="row-${toDosItem.id}">
-                                <td>${countId}</td>
-                                <td>${toDosItem.title}</td>
-                                <td>${noReminder[0]}</td>
-                                <td>${noReminder[1]}</td>
-                                <td>${isComplete}</td>
-                            </tr>
-                        `;
+                                            <tr id="row-${toDosItem.id}">
+                                                <td>${countId}</td>
+                                                <td>${toDosItem.title}</td>
+                                                <td>${noReminder[0]}</td>
+                                                <td>${noReminder[1]}</td>
+                                                <td>${isComplete}</td>
+                                            </tr>
+                                        `;
                                         countId += 1;
                                     }
                                 });
@@ -126,7 +133,7 @@ function mainCodes() {
                                                 if (document.querySelector(`#row-${i} td:nth-child(4) input`).value !== "") {
                                                     eval(`
                                                     let secoundCounter${i} = 0;
-                                                    setInterval(() => {
+                                                    let setInterval${i} = setInterval(() => {
                                                         secoundCounter${i} += 1;
                                                         if(secoundCounter${i} == parseInt(document.querySelector(\`#row-${i} td:nth-child(4) input\`).value)) {
                                                             customAlert.classList.remove("d-none");
@@ -139,8 +146,12 @@ function mainCodes() {
                                                                     document.querySelectorAll("#alert .container .title ul li").forEach(element => {
                                                                         element.classList.remove("opacity-0");
                                                                         element.style.transform = "translateY(0px)";
+                                                                        okBtn.onclick = () => {
+                                                                            muteAlert(i);
+                                                                        };
                                                                     });
-                                                                }, 1000)
+                                                                }, 1000);
+                                                                clearInterval(setInterval${i});
                                                             }, 500);
                                                         }
                                                     }, 1000);
@@ -166,14 +177,14 @@ function mainCodes() {
                                     e.preventDefault();
                                     if (newActivity.value !== "") {
                                         getTable.innerHTML += `
-                                <tr id="row-${countId}">
-                                    <td>${countId}</td>
-                                    <td>${newActivity.value}</td>
-                                    <td><input type="checkbox" class="form-check-input table-reminders"></td>
-                                    <td><input type="text" class="form-control table-input table-reminders"></td>
-                                    <td><i class="fa fa-times table-icon" aria-hidden="true"></i></td>
-                                </tr>
-                            `;
+                                            <tr id="row-${countId}">
+                                                <td>${countId}</td>
+                                                <td>${newActivity.value}</td>
+                                                <td><input type="checkbox" class="form-check-input table-reminders"></td>
+                                                <td><input type="number" class="form-control table-input table-reminders" min="1"></td>
+                                                <td><i class="fa fa-times table-icon" aria-hidden="true"></i></td>
+                                            </tr>
+                                        `;
                                         window.scrollTo(0, document.querySelector(`#row-${countId}`).getBoundingClientRect().top);
                                         countId += 1;
                                         for (let i = 1; i < countId; i++) {
